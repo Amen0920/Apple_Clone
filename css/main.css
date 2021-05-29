@@ -19,12 +19,14 @@ a{
     text-decoration: none;
 }
 
-
+/*   MENU  */
 .global-nav{
     height:44px;
+    padding: 0 1rem;
 }
 .local-nav{
     height:52px;
+    padding: 0 1rem;
     border-bottom: 1px solid #ddd;
 }
 .local-nav-links,
@@ -50,3 +52,8 @@ a{
     margin-left: 2em;
 }
 
+/* Scorll */
+.scroll-section{
+    padding-top: 50vh;
+
+}
