@@ -11,6 +11,14 @@
             type:'stick',
             objs:{
                 container:document.querySelector('#scroll-section-0'),
+                messageA :document.querySelector('#scroll-section-0 .main-message.a'),
+                messageB :document.querySelector('#scroll-section-0 .main-message.b'),
+                messageC :document.querySelector('#scroll-section-0 .main-message.c'),
+                messageD :document.querySelector('#scroll-section-0 .main-message.d'),
+            },
+            values:{
+                messageA_oppacity: [0,1],
+
             }
         },
         {   
@@ -64,6 +72,35 @@
         }
         document.body.setAttribute('id',`show-scene-${currentScene}`)
     }
+    function calcValues (values,currentYOffset) {
+        let rv; 
+        // 현재 씬에서 스크롤된 범위를 비율로 구하기.
+        let scrollRatio = currentYOffset / scenInfo[currentScene].scrollHeight;
+        rv = parseInt(scrollRatio) * 300; 
+        return rv;
+    }
+
+    function playAnimation () {
+        const objs = scenInfo[currentScene].objs;
+        const values = scenInfo[currentScene].values;
+        const currentYOffset =  yOffset-prevScrollHeight;
+
+        console.log(currentScene, currentYOffset)
+        switch (currentScene) {
+            case 0 : 
+                let messageA_oppacity_0 = values.messageA_oppacity[0];
+                let messageA_oppacity_1 = values.messageA_oppacity[1];
+                calcValues(values.messageA_oppacity, currentYOffset);
+                break;
+            case 1 : 
+                break;
+            case 2 :
+                break;
+            case 3:
+                break;
+
+        }
+    }
     
     function scrollLoop() {
         prevScrollHeight = 0;
@@ -82,6 +119,8 @@
             currentScene--;
             document.body.setAttribute('id',`show-scene-${currentScene}`)
         }
+
+        playAnimation();
     }
  
     
