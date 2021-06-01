@@ -48,6 +48,21 @@
             scenInfo[i].scrollHeight = scenInfo[i].heightNum * window.innerHeight;
             scenInfo[i].objs.container.style.height = `${scenInfo[i].scrollHeight}px`;
         }
+
+        // 이 js에서 pageYOffset을 yOffset에 담아 사용하기로했으므로 넣어줌.
+        yOffset = pageYOffset;
+
+        // 처음실행시, resize할때 currentScene값을 제대로 지정해줌.
+        let totalScrollHeight = 0;
+        for(let i =0; i < scenInfo.length; i++){
+            totalScrollHeight += scenInfo[i].scrollHeight;
+            if( totalScrollHeight >= yOffset ){
+                currentScene = i;
+                break;
+
+            }
+        }
+        document.body.setAttribute('id',`show-scene-${currentScene}`)
     }
     
     function scrollLoop() {
@@ -56,22 +71,25 @@
             prevScrollHeight += scenInfo[i].scrollHeight;
         }
 
+        // currentScene 이 바뀔때만 body태그 아이디 변경해줌.
         if(yOffset > prevScrollHeight + scenInfo[currentScene].scrollHeight) {
             if(currentScene == 3) return;
             currentScene++;
+            document.body.setAttribute('id',`show-scene-${currentScene}`)
         }
         if(yOffset < prevScrollHeight){
             if(currentScene == 0)return;
             currentScene--;
+            document.body.setAttribute('id',`show-scene-${currentScene}`)
         }
-        console.log(currentScene);
     }
-
-    window.addEventListener('resize',setLayout);
+ 
+    
     window.addEventListener('scroll',() => {
         yOffset = pageYOffset;
         scrollLoop();
     });
-    setLayout();
-    console.log(scenInfo);
+    window.addEventListener('load',setLayout);
+    window.addEventListener('resize',setLayout);
+    
 })();
