@@ -78,6 +78,7 @@ a{
     display: flex;
     align-items: center;
     justify-content: center;
+    top:35vh !important;
     margin: 5px 0;
     height: 3em;
     font-size: 2.5rem;
@@ -112,7 +113,15 @@ a{
     color:rgb(29,29,31)
 }
 
+#scroll-section-2 .b{
+    top: 10%;
+    left: 40%;
+}
 
+#scroll-section-2 .c{
+    top: 15%;
+    left: 45%;
+}
 
 .pin {
     width:1px;
@@ -192,6 +201,14 @@ footer {
     }
     .desc-message{
         width:20%;
+    }
+    #scroll-section-2 .b{
+        top: 20%;
+        left: 53%;
+    }
+    
+    #scroll-section-2 .c{
+        left: 55%;
     }
     .mid-message {
         font-size: 4vw;
