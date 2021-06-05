@@ -115,11 +115,14 @@
             scrollHeight:0,
             type:'sticky',
             objs:{
-                container:document.querySelector('#scroll-section-3'),
+                container: document.querySelector('#scroll-section-3'),
+                canvasCaption: document.querySelector('.canvas-caption'),
+                canvas: document.querySelector('.image-blend-canvas'),
+                context: document.querySelector('.image-blend-canvas').getContext('2d'),
             },
             values:{
 
-            }
+            } 
         }
     ];
 
@@ -136,7 +139,7 @@
             imgElem2.src = `./video/002/IMG_${7027 + i}.JPG`;
             scenInfo[2].objs.videoImages.push(imgElem2);
         }
-        console.log(scenInfo[2].objs.videoImages[500])
+       
     };
     setCanvasImage();
     
@@ -212,7 +215,6 @@
         switch (currentScene) {
             case 0 : 
                 let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
-                console.log(sequence);
                 objs.context.drawImage(objs.videoImages[sequence],0,0)
                 objs.canvas.style.opacity = calcValues(values.canvas_opacity_out,currentYOffset);
 
@@ -254,7 +256,6 @@
             case 1 : 
                 break;
             case 2 :
-                console.log(objs)
                 let sequence2 = Math.round(calcValues(values.imageSequence, currentYOffset));
                 objs.context.drawImage(objs.videoImages[sequence2],0,0)
                 // objs.canvas.style.opacity = calcValues(values.canvas_opacity_out,currentYOffset);
@@ -299,6 +300,23 @@
                 }
                 break;
             case 3:
+                //가로 세로 모두 꽉 차게 하기위해 canvas의 크기를 이 함수 안에서 계산해야한다.
+                const widthRatio = innerWidth / objs.canvas.width;
+                const heightRatio = innerHeight / objs.canvas.height;
+                let canvasScaleRatio;
+
+                if(widthRatio <= heightRatio){
+                    //캔버스창보다 브라우저창이 홀쭉한 경우
+                    canvasScaleRatio = heightRatio
+                    console.log('heightRatio로 결정')
+                }else{
+                    // 캔버스창보다 브라우저 창이 납작한 경우.
+                    canvasScaleRatio = widthRatio;
+                }
+
+                console.log(widthRatio, heightRatio);
+                objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
+
                 break;
 
         }

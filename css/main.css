@@ -195,6 +195,10 @@ footer {
 #scroll-section-2 canvas {
     z-index: 5;
 }
+
+.image-blend-canvas{
+    background:  blue;
+}
 /* DeskTop font-size */
 @media (min-width:1024px){
     #scroll-section-0 h1{
