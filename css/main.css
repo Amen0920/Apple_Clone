@@ -196,8 +196,16 @@ footer {
     z-index: 5;
 }
 
-.image-blend-canvas{
-    background:  blue;
+
+#scroll-section-3 {
+    
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+#scroll-section-3 canvas{
+    margin:20vh 0;
 }
 /* DeskTop font-size */
 @media (min-width:1024px){

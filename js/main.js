@@ -119,9 +119,15 @@
                 canvasCaption: document.querySelector('.canvas-caption'),
                 canvas: document.querySelector('.image-blend-canvas'),
                 context: document.querySelector('.image-blend-canvas').getContext('2d'),
+                imagePath:[
+                    './images/blend-image-1.jpg',
+                    './images/blend-image-2.jpg'
+                ],
+                images:[]
+
             },
             values:{
-
+                
             } 
         }
     ];
@@ -138,6 +144,12 @@
             imgElem2 = new Image();
             imgElem2.src = `./video/002/IMG_${7027 + i}.JPG`;
             scenInfo[2].objs.videoImages.push(imgElem2);
+        }
+        let imgElem3;
+        for(let i = 0;i < scenInfo[3].objs.imagePath.length; i++){
+            imgElem3 = new Image();
+            imgElem3.src = scenInfo[3].objs.imagePath[i];
+            scenInfo[3].objs.images.push(imgElem3);
         }
        
     };
@@ -308,7 +320,7 @@
                 if(widthRatio <= heightRatio){
                     //캔버스창보다 브라우저창이 홀쭉한 경우
                     canvasScaleRatio = heightRatio
-                    console.log('heightRatio로 결정')
+                    
                 }else{
                     // 캔버스창보다 브라우저 창이 납작한 경우.
                     canvasScaleRatio = widthRatio;
@@ -316,7 +328,7 @@
 
                 console.log(widthRatio, heightRatio);
                 objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
-
+                objs.context.drawImage(objs.images[0], 0, 0);
                 break;
 
         }
