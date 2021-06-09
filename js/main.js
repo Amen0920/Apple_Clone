@@ -341,8 +341,7 @@
                     // top갑 가져올수는 있기는하나. 스크롤속도에따라 값이달라짐
                     // values.rectStartY = objs.canvas.getBoundingClientRect().top;
 
-                    // 컨테이너 posotion을 relative로 바꿔주면 현재섹션기준으로 위치가 구해지나.
-                    // transform scale 이 적용되기전기준의 높이가 나와버림.
+                    // 컨테이너 posotion을 relative로 바꿔주면 현재섹션기준으로 위 
                     values.rectStartY = objs.canvas.offsetTop + ( objs.canvas.height - objs.canvas.height * canvasScaleRatio)/2;
                     console.log(values.rectStartY);
                     values.rect1X[2].start = (window.innerHeight/2) / scrollHeight;
