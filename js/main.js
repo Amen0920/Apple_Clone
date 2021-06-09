@@ -127,9 +127,12 @@
 
             },
             values:{
-                rect1X: [0, 0, { start: 0,end: 0 }],
-                rect2X: [0, 0, { start: 0,end: 0 }],
+                rect1X: [0, 0, { start: 0, end: 0 }],
+                rect2X: [0, 0, { start: 0, end: 0 }],
                 rectStartY : 0,
+
+                imageBlendY: [0, 0, { start: 0, end: 0 }],
+
             } 
         }
     ];
@@ -312,9 +315,49 @@
                     objs.messageC.style.opacity = calcValues(values.messageC_opacity_out, currentYOffset);
                     objs.pinC.style.transform = `scaleY(${calcValues(values.pinC_scaleY, currentYOffset)})`;
                 }
+
+                //section 3 에서 쓰는 canvas를 미리 그리기 시작함.
+                if( scrollRatio > 0.9 ){
+                    const objs = scenInfo[3].objs;
+                    const values = scenInfo[3].values;
+
+                    //가로 세로 모두 꽉 차게 하기위해 canvas의 크기를 이 함수 안에서 계산해야한다.
+                    const widthRatio = innerWidth / objs.canvas.width;
+                    const heightRatio = innerHeight / objs.canvas.height;
+                    let canvasScaleRatio;
+
+                    if(widthRatio <= heightRatio){
+                        //캔버스창보다 브라우저창이 홀쭉한 경우
+                        canvasScaleRatio = heightRatio
+                        
+                    }else{
+                        // 캔버스창보다 브라우저 창이 납작한 경우.
+                        canvasScaleRatio = widthRatio;
+                    }
+                    objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
+                    objs.context.fillStyle = 'white';
+                    objs.context.drawImage(objs.images[0], 0, 0);
+
+                    //캔버스 사이즈에 맞춰서 가정한 innerWidth와 innerHeight
+                    const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio;
+                    const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio;
+                    
+
+                    const whiteRectWidth = recalculatedInnerWidth * 0.15;
+                    values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2;
+                    values.rect1X[1] = values.rect1X[0] - whiteRectWidth;
+                    values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth;
+                    values.rect2X[1] = values.rect2X[0] + whiteRectWidth;
+
+                    objs.context.fillRect(values.rect1X[0], 0, parseInt(whiteRectWidth), objs.canvas.height);
+                    objs.context.fillRect(values.rect2X[0], 0, parseInt(whiteRectWidth), objs.canvas.height);
+                }
+
                 break;
             case 3:
                 //가로 세로 모두 꽉 차게 하기위해 canvas의 크기를 이 함수 안에서 계산해야한다.
+                let step = 0;
+
                 const widthRatio = innerWidth / objs.canvas.width;
                 const heightRatio = innerHeight / objs.canvas.height;
                 let canvasScaleRatio;
@@ -334,16 +377,13 @@
                 //캔버스 사이즈에 맞춰서 가정한 innerWidth와 innerHeight
                 const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio;
                 const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio;
-                
-                
-                console.log( ' section 3 start ')
+            
                 if(!values.rectStartY){
                     // top갑 가져올수는 있기는하나. 스크롤속도에따라 값이달라짐
                     // values.rectStartY = objs.canvas.getBoundingClientRect().top;
 
                     // 컨테이너 posotion을 relative로 바꿔주면 현재섹션기준으로 위 
                     values.rectStartY = objs.canvas.offsetTop + ( objs.canvas.height - objs.canvas.height * canvasScaleRatio)/2;
-                    console.log(values.rectStartY);
                     values.rect1X[2].start = (window.innerHeight/2) / scrollHeight;
                     values.rect2X[2].start = (window.innerHeight/2) / scrollHeight;
                     values.rect1X[2].end = values.rectStartY / scrollHeight;
@@ -361,6 +401,19 @@
 
                 objs.context.fillRect(calcValues(values.rect1X,currentYOffset), 0, parseInt(whiteRectWidth), objs.canvas.height);
                 objs.context.fillRect(calcValues(values.rect2X, currentYOffset), 0, parseInt(whiteRectWidth), objs.canvas.height);
+
+                // 캔버스가 아직 브라우저 상단에 닫지않았을떄.
+                if(scrollRatio < values.rect1X[2].end) {
+                    step = 1;
+                    objs.canvas.classList.remove('sticky');
+                }else {
+                    step = 2;
+                    objs.context.drawImage(objs.images[1], 0, 200)
+
+                    objs.canvas.classList.add('sticky');
+                    objs.canvas.style.top = `${ -(objs.canvas.height - objs.canvas.height * canvasScaleRatio)/2  }px`;
+                    
+                }
 
                 break;
 

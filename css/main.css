@@ -187,11 +187,14 @@ footer {
     height:100vh;
 }
 
+
 .sticky-elem-canvas canvas{
     position:absolute;
     top:50%;
     left:50%;
 }
+
+
 #scroll-section-2 canvas {
     z-index: 5;
 }
@@ -204,9 +207,13 @@ footer {
     align-items: center;
     
 }
-#scroll-section-3 canvas{
-    margin:20vh 0;
+#scroll-section-3 .mid-message{
+     margin:20vh 0; 
 }
+.image-blend-canvas.sticky{
+    position:fixed;
+}
+
 /* DeskTop font-size */
 @media (min-width:1024px){
     #scroll-section-0 h1{
