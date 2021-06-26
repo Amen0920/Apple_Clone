@@ -440,6 +440,13 @@
                         values.canvas_scale[2].end = values.canvas_scale[2].start + 0.2;
 
                         objs.canvas.style.transform = `scale(${calcValues(values.canvas_scale, currentYOffset)})`;
+                        objs.canvas.style.marginTop = `0px`;
+                    }
+
+                    if(scrollRatio > values.canvas_scale[2].end && values.canvas_scale[2].end >0){
+                        console.log('sc')
+                        objs.canvas.classList.remove('sticky');
+                        objs.canvas.style.marginTop = `${scrollHeight * 0.4}px`;
                     }
                     
                 }
